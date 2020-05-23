@@ -1,0 +1,142 @@
+package com.br.project.matchjob.service;
+
+import com.br.project.matchjob.dto.CompetenciaDTO;
+import com.br.project.matchjob.dto.Mensagem;
+import com.br.project.matchjob.dto.VagaDTO;
+import com.br.project.matchjob.exception.ResourceNotFoundException;
+import com.br.project.matchjob.model.Competencia;
+import com.br.project.matchjob.model.Endereco;
+import com.br.project.matchjob.model.Usuario;
+import com.br.project.matchjob.model.Vaga;
+import com.br.project.matchjob.repository.UsuarioRepository;
+import com.br.project.matchjob.repository.VagaRepository;
+import com.br.project.matchjob.util.ConvertModelToDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class VagaService extends ConvertModelToDTO {
+
+	@Autowired
+	private VagaRepository vagaRepository;
+
+	@Autowired
+	private PastaService pastaVagaService;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	private Mensagem mensagem;
+
+	public ResponseEntity<Mensagem> inserir(VagaDTO vagaDTO) {
+		try {
+			Vaga vaga = new Vaga();
+			vaga = preencherProduto(vagaDTO, vaga);
+			vagaRepository.save(vaga);
+			pastaVagaService.createDirectoryVaga(vaga.getId());
+			mensagem = new Mensagem("Vaga Cadastrado com Sucesso!!", vaga.getId(), "success", true);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+		} catch (Exception e) {
+			mensagem = new Mensagem("Erro ao Cadastrar!", vagaDTO.getId(), "error", false);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+		}
+	}
+
+	public ResponseEntity<Mensagem> alterar(VagaDTO vagaDTO) {
+		try {
+			Vaga vaga = new Vaga();
+			vaga = vagaRepository.findById(vagaDTO.getId()).orElseThrow(() ->
+					new ResourceNotFoundException("Usuario não encontrado para o  id :: " + vagaDTO.getId()));;
+			vagaRepository.save(preencherProduto(vagaDTO, vaga));
+			mensagem = new Mensagem("Vaga Alterado com Sucesso!!", vaga.getId(), "success", true);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+		} catch (Exception e) {
+			mensagem = new Mensagem("Erro ao Tentar Alterar", vagaDTO.getId(), "error", false);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+		}
+	}
+
+	private Vaga preencherProduto(VagaDTO vagaDTO, Vaga vaga) {
+		vaga.setDescricao(vagaDTO.getDescricao());
+		vaga.setNome(vagaDTO.getNome());
+		vaga.setValor(vagaDTO.getValor());
+		vaga.setEndereco(super.toModel(vagaDTO.getEndereco(), Endereco.class));
+		vaga.setEmail(vagaDTO.getEmail());
+		vaga.setNomeEmpresa(vagaDTO.getNomeEmpresa());
+		vaga.setDataCadastro(new Date());
+		vaga.setIdUsuario(vagaDTO.getIdUsuario());
+		vaga.setCompetencias(vagaDTO.getCompetencias() == null || vagaDTO.getCompetencias().isEmpty()  ? null : preencherCompetencias(vagaDTO.getCompetencias(), vaga));
+		return vaga;
+	}
+
+	private List<Competencia> preencherCompetencias(List<CompetenciaDTO> competenciaDTOS, Vaga vaga){
+		vaga.getCompetencias().removeAll(vaga.getCompetencias());
+		for(CompetenciaDTO competenciaDTO : competenciaDTOS){
+			vaga.getCompetencias().add(super.toModel(competenciaDTO, Competencia.class));
+		}
+		return vaga.getCompetencias();
+	}
+
+	public ResponseEntity<Mensagem> excluir(Long id) {
+
+		try {
+			Vaga vaga = vagaRepository.findById(id).orElseThrow(() ->
+					new ResourceNotFoundException("Vaga não encontrada para o  id :: " + id));
+
+			vagaRepository.delete(vaga);
+			mensagem = new Mensagem("Vaga Excluído com Sucesso!", id, "success", true);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+
+		} catch (Exception e) {
+			mensagem = new Mensagem("Erro ao tentar excluir", id, "error", false);
+			return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+		}
+	}
+
+	public ResponseEntity<List<Vaga>> listarTodasVagas(Long idUsuario) throws ResourceNotFoundException {
+		Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() ->
+				new ResourceNotFoundException("Usuario não encontrado para o  id :: " + idUsuario));
+		List<Vaga> vagas = vagaRepository.findAll();
+		vagas.removeAll(usuario.getVagas());
+		if (ObjectUtils.isEmpty(vagas)) {
+			return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.OK);
+
+	}
+
+	public ResponseEntity<List<Vaga>> listarMinhasVagasCadastradas(Long idUsuario) throws ResourceNotFoundException {
+		List<Vaga> vagas = vagaRepository.findByIdUsuario(idUsuario);
+		if (ObjectUtils.isEmpty(vagas)) {
+			return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.OK);
+
+	}
+	public ResponseEntity<List<Vaga>> listarMinhasVagas(Long idUsuario)  {
+		List<Vaga> vagas = usuarioRepository.findById(idUsuario).get().getVagas();
+		if (ObjectUtils.isEmpty(vagas)) {
+			return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Vaga>>(vagas, HttpStatus.OK);
+
+	}
+
+	public ResponseEntity<List<Usuario>> consultarCandidatos(Long id){
+		return new ResponseEntity<List<Usuario>>(usuarioRepository.findCandidaturasByIdVaga(id), HttpStatus.OK);
+	}
+
+	public ResponseEntity<Vaga> listarPorId(Long id) throws ResourceNotFoundException {
+		Vaga retorna = vagaRepository.findById(id).orElseThrow(() ->
+				new ResourceNotFoundException("Vaga não encontrada para o  id :: " + id));;;
+		if (ObjectUtils.isEmpty(retorna)) {
+		}
+		return new ResponseEntity<Vaga>(retorna, HttpStatus.OK);
+	}
+}

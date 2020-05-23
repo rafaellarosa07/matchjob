@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "application-properties",
+      "type": "com.br.project.matchjob.config.ApplicationProperties",
+      "sourceType": "com.br.project.matchjob.config.ApplicationProperties"
+    },
+    {
+      "name": "application-properties.swagger",
+      "type": "com.br.project.matchjob.config.ApplicationProperties$Swagger",
+      "sourceType": "com.br.project.matchjob.config.ApplicationProperties",
+      "sourceMethod": "getSwagger()"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
