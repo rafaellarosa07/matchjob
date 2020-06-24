@@ -103,8 +103,8 @@ class _CandidaturasState extends State<Candidaturas> {
                                     endIndent: 0,
                                   ),
                                   RaisedButton(
-                                    color: Colors.amber,
-                                    child: Text("Open from URL"),
+                                    color: Colors.cyan[600],
+                                    child: Text("Download Curriculo"),
                                     onPressed: () {
                                       if (urlPDFPath != null) {
                                         Navigator.push(

@@ -18,7 +18,8 @@ class MinhasVagas extends StatefulWidget {
 class _MinhasVagasState extends State<MinhasVagas> {
   int tamanhoDaLista;
   bool _isLoading = false;
-  List<Vaga> listaVaga = new List<Vaga>();
+  static List<Vaga> newDataList = new List<Vaga>();
+  List<Vaga> listaVaga = List.from(newDataList);
   final _email = TextEditingController();
   final _nome = TextEditingController();
   final _valor = TextEditingController();
@@ -34,10 +35,15 @@ class _MinhasVagasState extends State<MinhasVagas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Vagas",
-            style: TextStyle(color: Colors.white),
-          ),
+          title: new TextField(
+              style: TextStyle(color: Colors.white, fontSize: 17),
+              decoration: InputDecoration(
+                hintText: 'Pesquisar',
+                hintStyle: TextStyle(
+                    fontFamily: "WorkSansSemiBold", fontSize: 17.0, color: Colors.white),
+
+              ),
+              onChanged: onItemChanged),
           centerTitle: true,
           backgroundColor: Colors.cyan[600],
           leading: IconButton(
@@ -107,6 +113,14 @@ class _MinhasVagasState extends State<MinhasVagas> {
     );
   }
 
+  onItemChanged(String value) {
+    setState(() {
+      listaVaga = newDataList
+          .where((string) => string.nome.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
   void _visualizarVaga(Vaga vaga) {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
@@ -129,7 +143,8 @@ class _MinhasVagasState extends State<MinhasVagas> {
         setState(() {
           _isLoading = false;
         });
-        listaVaga = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
+        newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
+        listaVaga = List.from(newDataList);
       }
     }
   }

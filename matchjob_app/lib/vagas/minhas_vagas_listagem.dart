@@ -19,7 +19,8 @@ class VagaListagem extends StatefulWidget {
 class _VagaListagemState extends State<VagaListagem> {
   int tamanhoDaLista;
   bool _isLoading = false;
-  List<Vaga> listaVaga = new List<Vaga>();
+  static List<Vaga> newDataList = new List<Vaga>();
+  List<Vaga> listaVaga = List.from(newDataList);
   final _email = TextEditingController();
   final _nome = TextEditingController();
   final _valor = TextEditingController();
@@ -35,17 +36,22 @@ class _VagaListagemState extends State<VagaListagem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Vagas",
-            style: TextStyle(color: Colors.white),
-          ),
+          title: new TextField(
+              style: TextStyle(color: Colors.white, fontSize: 17),
+              decoration: InputDecoration(
+                hintText: 'Pesquisar',
+                  hintStyle: TextStyle(
+                      fontFamily: "WorkSansSemiBold", fontSize: 17.0, color: Colors.white),
+
+              ),
+              onChanged: onItemChanged),
           centerTitle: true,
           backgroundColor: Colors.cyan[600],
           leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HomeContratante()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeContratante()));
               })),
       body: _listaDeVagas(),
       floatingActionButton: FloatingActionButton(
@@ -98,39 +104,37 @@ class _VagaListagemState extends State<VagaListagem> {
                     child: new Container(
                         child: new Stack(
                       children: <Widget>[
-                        Column(
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                child: Align(
-                                    alignment: Alignment.topLeft,
+                        Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Row(children: <Widget>[
+                                  Icon(
+                                    Icons.email,
+                                    color: Colors.cyan[600],
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(80, 0, 0, 0),
                                     child: Row(children: <Widget>[
-                                      Icon(
-                                        Icons.email,
-                                        color: Colors.cyan[600],
-                                        size: 40,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            80, 0, 0, 0),
-                                        child: Row(children: <Widget>[
-                                          Text(listaVaga[index].nome,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 18))
-                                        ]),
-                                      )
-                                    ])),
-                              ),
-                              Divider(
-                                color: Colors.grey,
-                                height: 5,
-                                thickness: 1,
-                                indent: 20,
-                                endIndent: 0,
-                              )
-                            ])
+                                      Text(listaVaga[index].nome,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18))
+                                    ]),
+                                  )
+                                ])),
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            height: 5,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 0,
+                          )
+                        ])
                       ],
                     )))));
       },
@@ -144,6 +148,16 @@ class _VagaListagemState extends State<VagaListagem> {
         (Route<dynamic> route) => false);
   }
 
+
+
+  onItemChanged(String value) {
+    setState(() {
+      listaVaga = newDataList
+          .where((string) => string.nome.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
   _consultarVagas() async {
     int usuario;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -151,7 +165,9 @@ class _VagaListagemState extends State<VagaListagem> {
     List jsonResponse;
 
     var response = await http.get(
-        Variavel.urlBase+"vaga/minhas-vagas-cadastradas/" + usuario.toString(),
+        Variavel.urlBase +
+            "vaga/minhas-vagas-cadastradas/" +
+            usuario.toString(),
         headers: {"Content-type": "application/json"});
     if (response.statusCode == 200) {
       jsonResponse = response.body.isEmpty ? null : jsonDecode(response.body);
@@ -159,7 +175,8 @@ class _VagaListagemState extends State<VagaListagem> {
         setState(() {
           _isLoading = false;
         });
-        listaVaga = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
+        newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
+        listaVaga = List.from(newDataList);
       }
     }
   }

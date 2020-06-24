@@ -47,18 +47,18 @@ flutter:
 
   uses-material-design: true
 
-#  fonts:
-#    - family: WorkSansSemiBold
-#      fonts:
-#        - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
-#
-#    - family: WorkSansBold
-#      fonts:
-#        - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
+  #  fonts:
+  #    - family: WorkSansSemiBold
+  #      fonts:
+  #        - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
+  #
+  #    - family: WorkSansBold
+  #      fonts:
+  #        - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
 
-#    - family: WorkSansMedium
-#      fonts:
-#        - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
+  #    - family: WorkSansMedium
+  #      fonts:
+  #        - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
