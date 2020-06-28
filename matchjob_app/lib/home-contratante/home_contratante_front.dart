@@ -147,7 +147,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
             key: _formKey,
             child: new Column(children: <Widget>[
               SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,

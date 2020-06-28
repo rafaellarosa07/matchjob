@@ -63,7 +63,7 @@ class _CandidaturasState extends State<Candidaturas> {
         return GestureDetector(
             child: Container(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                height: 180,
+                height: 120,
                 width: double.maxFinite,
                 child: Card(
                     elevation: 20,
@@ -104,7 +104,7 @@ class _CandidaturasState extends State<Candidaturas> {
                                   ),
                                   RaisedButton(
                                     color: Colors.cyan[600],
-                                    child: Text("Download Curriculo"),
+                                    child: Text("Visualizar Curriculo"),
                                     onPressed: () {
                                       if (urlPDFPath != null) {
                                         Navigator.push(

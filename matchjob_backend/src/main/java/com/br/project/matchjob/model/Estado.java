@@ -9,19 +9,22 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Competencia")
+@Table(name = "Estado")
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class Competencia implements Serializable {
+@Builder
+public class Estado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "descricao", nullable = false, length = 80)
-    private String descricao;
+    @Column(name = "nome", length = 75)
+    private String nome;
+
+    @Column(name = "uf", length = 2)
+    private String uf;
 
 }

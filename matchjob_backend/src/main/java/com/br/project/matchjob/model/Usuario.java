@@ -41,10 +41,6 @@ public class Usuario implements Serializable {
     @Column(name = "senha", length = 40)
     private String senha;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_endereco")
-    private Endereco endereco;
-
     @ManyToMany
     @JoinTable(
             name = "usuario_vaga",

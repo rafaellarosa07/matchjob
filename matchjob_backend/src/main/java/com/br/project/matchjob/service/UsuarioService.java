@@ -75,18 +75,10 @@ public class UsuarioService extends ConvertModelToDTO {
     private Usuario preencherUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
         tratamentoCnpjCpf(usuario, usuarioDTO);
         usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setEndereco(preencherEndereco(usuarioDTO.getEndereco(), usuario.getEndereco()));
         usuario.setNome(usuarioDTO.getNome());
         usuario.setTipoPessoa(usuarioDTO.getTipoPessoa());
         usuario.setSenha(usuarioDTO.getSenha());
         return usuario;
-    }
-
-    private Endereco preencherEndereco(EnderecoDTO enderecoDTO, Endereco endereco) {
-        endereco.setCep(enderecoDTO.getCep());
-        endereco.setLatitude(enderecoDTO.getLatitude());
-        endereco.setLongitude(enderecoDTO.getLongitude());
-        return endereco;
     }
 
     public ResponseEntity<Mensagem> excluir(Long id) {

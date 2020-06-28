@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class EnderecoDTO implements Serializable {
 
     private Long id;
-    private String cep;
-    private String latitude;
-    private String longitude;
+    private CidadeDTO cidade;
+    private Long idCidade;
 }

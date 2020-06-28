@@ -1,13 +1,12 @@
 package com.br.project.matchjob.service;
 
-import com.br.project.matchjob.dto.CompetenciaDTO;
 import com.br.project.matchjob.dto.Mensagem;
 import com.br.project.matchjob.dto.VagaDTO;
 import com.br.project.matchjob.exception.ResourceNotFoundException;
-import com.br.project.matchjob.model.Competencia;
 import com.br.project.matchjob.model.Endereco;
 import com.br.project.matchjob.model.Usuario;
 import com.br.project.matchjob.model.Vaga;
+import com.br.project.matchjob.repository.CidadeRepository;
 import com.br.project.matchjob.repository.UsuarioRepository;
 import com.br.project.matchjob.repository.VagaRepository;
 import com.br.project.matchjob.util.ConvertModelToDTO;
@@ -31,6 +30,9 @@ public class VagaService extends ConvertModelToDTO {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     private Mensagem mensagem;
 
@@ -66,23 +68,23 @@ public class VagaService extends ConvertModelToDTO {
     private Vaga preencherProduto(VagaDTO vagaDTO, Vaga vaga) {
         vaga.setDescricao(vagaDTO.getDescricao());
         vaga.setNome(vagaDTO.getNome());
+        vaga.setDescricao(vagaDTO.getDescricao());
         vaga.setValor(vagaDTO.getValor());
-        vaga.setEndereco(super.toModel(vagaDTO.getEndereco(), Endereco.class));
+        preencherEndereco(vagaDTO, vaga);
         vaga.setEmail(vagaDTO.getEmail());
         vaga.setNomeEmpresa(vagaDTO.getNomeEmpresa());
         vaga.setDataCadastro(new Date());
         vaga.setIdUsuario(vagaDTO.getIdUsuario());
-        vaga.setCompetencias(vagaDTO.getCompetencias() == null || vagaDTO.getCompetencias().isEmpty() ? null : preencherCompetencias(vagaDTO.getCompetencias(), vaga));
         return vaga;
     }
 
-    private List<Competencia> preencherCompetencias(List<CompetenciaDTO> competenciaDTOS, Vaga vaga) {
-        vaga.getCompetencias().removeAll(vaga.getCompetencias());
-        for (CompetenciaDTO competenciaDTO : competenciaDTOS) {
-            vaga.getCompetencias().add(super.toModel(competenciaDTO, Competencia.class));
-        }
-        return vaga.getCompetencias();
+    private void preencherEndereco(VagaDTO vagaDTO, Vaga vaga){
+        Endereco endereco = new Endereco();
+        endereco.setCidade(cidadeRepository.findById(vagaDTO.getEndereco().getIdCidade()).get());
+        vaga.setEndereco(endereco);
+
     }
+
 
     public ResponseEntity<Mensagem> excluir(Long id) {
 

@@ -32,6 +32,7 @@ dependencies:
   flutter_pdfview:
   path_provider:
   font_awesome_flutter: ^8.0.1
+  fluttertoast: ^4.0.0
 
 
 dev_dependencies:

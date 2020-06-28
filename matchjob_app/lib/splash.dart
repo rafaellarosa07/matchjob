@@ -27,7 +27,9 @@ class _SplashState extends State<Splash> {
           child: Container(
             width: 150,
             height: 150,
-            child: Image.asset("images/fundo-azul.jpg"),
+            child: new Container(
+              color: Colors.cyan[300],
+            ),
           ),
         )
     );

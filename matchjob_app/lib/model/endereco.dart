@@ -1,21 +1,21 @@
+import 'cidade.dart';
+
 class Endereco {
   int id;
-  String cep;
-  String longitude;
-  String latitude;
+  Cidade cidade;
+  int idCidade;
 
-  Endereco(this.id, this.cep, this.longitude,this.latitude);
+  Endereco(this.id, this.cidade, this.idCidade);
 
   Map toJson() => {
     'id': id,
-    'cep': cep,
-    'longitude':longitude,
-    'latitude': latitude,
+    'cidade': cidade,
+    'idCidade': idCidade,
   };
 
   Endereco.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        cep = json['cep'],
-        longitude = json['longitude'],
-        latitude = json['latitude'];
+        idCidade = json['idCidade'],
+        cidade = Cidade.fromJson(json['cidade'])
+  ;
 }

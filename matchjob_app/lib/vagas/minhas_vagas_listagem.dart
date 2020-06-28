@@ -133,7 +133,43 @@ class _VagaListagemState extends State<VagaListagem> {
                             thickness: 1,
                             indent: 20,
                             endIndent: 0,
+                          ),
+
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].endereco.cidade.nome,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14))
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text("R\$ ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14))
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].valor,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14))
+                                ]),
+                              )
+                            ],
                           )
+
                         ])
                       ],
                     )))));

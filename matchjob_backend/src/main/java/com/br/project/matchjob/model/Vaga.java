@@ -48,10 +48,4 @@ public class Vaga implements Serializable {
     @JoinColumn(name = "fk_endereco", nullable = false)
     private Endereco endereco;
 
-    @ManyToMany
-    @JoinTable(
-            name = "vaga_competencia",
-            joinColumns = @JoinColumn(name = "fk_vaga"),
-            inverseJoinColumns = @JoinColumn(name = "fk_competencia"))
-    private List<Competencia> competencias;
 }
