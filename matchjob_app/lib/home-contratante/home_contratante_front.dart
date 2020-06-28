@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matchjob/util/server_request.dart';
 import 'package:matchjob/util/variavel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
@@ -203,20 +202,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                     ),
                     buildTexFieldCpfCnpj(
                         "CPF", cnpjCpfController, TextInputType.text),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: _choose,
-                          child: Text('Choose Image'),
-                        ),
-                        SizedBox(width: 10.0),
-                        RaisedButton(
-                          onPressed: _upload,
-                          child: Text('Upload Image'),
-                        )
-                      ],
-                    ),
+
                     RaisedButton(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
@@ -375,31 +361,6 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     );
   }
 
-  void _choose() async {
-    file = await FilePicker.getFile();
-  }
-
-  _upload() async {
-    var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
-    var length = await file.length();
-
-    var uri = Uri.parse(
-        Variavel.urlBase+"usuario/curriculo/"); //I get the URL from some config
-
-    Map<String, String> headers = {"content-type": "multipart/form-data"};
-
-    var request = new http.MultipartRequest("POST", uri);
-    request.headers.addAll(headers);
-    var multipartFile = new http.MultipartFile('file', stream, length,
-        contentType: new MediaType('multipart/form-data', 'pdf'));
-
-    request.files.add(multipartFile);
-    var response = await request.send();
-    print(response.statusCode);
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
 
   String _validateEmail(String value) {
     if (value.isEmpty) {

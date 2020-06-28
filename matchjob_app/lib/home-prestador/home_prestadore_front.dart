@@ -200,20 +200,6 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                     ),
                     buildTexFieldCpfCnpj(
                         "CPF", cnpjCpfController, TextInputType.text),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: _choose,
-                          child: Text('Choose Image'),
-                        ),
-                        SizedBox(width: 10.0),
-                        RaisedButton(
-                          onPressed: _upload,
-                          child: Text('Upload Image'),
-                        )
-                      ],
-                    ),
                     RaisedButton(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
@@ -307,30 +293,6 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     );
   }
 
-  void _choose() async {
-    file = await FilePicker.getFile();
-  }
-
-  _upload() async {
-    var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
-    var length = await file.length();
-
-    var uri = Uri.parse(Variavel.urlBase +
-        "usuario/curriculo/"+usuario.id.toString()); //I get the URL from some config
-
-    Map<String, String> headers = { "content-type": "multipart/form-data" };
-
-    var request = new http.MultipartRequest("POST", uri);
-    request.headers.addAll(headers);
-    var multipartFile = new http.MultipartFile('file', stream, length, filename: file.path);
-
-    request.files.add(multipartFile);
-    var response = await request.send();
-    print(response.statusCode);
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
 
   String _validateEmail(String value) {
     if (value.isEmpty) {

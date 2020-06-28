@@ -74,39 +74,73 @@ class _MinhasVagasState extends State<MinhasVagas> {
                     child: new Container(
                         child: new Stack(
                           children: <Widget>[
-                            Column(
+                            Column(children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Row(children: <Widget>[
+                                      Icon(
+                                        Icons.email,
+                                        color: Colors.cyan[600],
+                                        size: 40,
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.fromLTRB(80, 0, 0, 0),
+                                        child: Row(children: <Widget>[
+                                          Text(listaVaga[index].nome,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18))
+                                        ]),
+                                      )
+                                    ])),
+                              ),
+                              Divider(
+                                color: Colors.grey,
+                                height: 5,
+                                thickness: 1,
+                                indent: 20,
+                                endIndent: 0,
+                              ),
+
+                              Row(
                                 children: <Widget>[
                                   Padding(
                                     padding:
-                                    const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                    child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Row(children: <Widget>[
-                                          Icon(
-                                            Icons.email,
-                                            color: Colors.cyan[600],
-                                            size: 40,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                80, 0, 0, 0),
-                                            child: Row(children: <Widget>[
-                                              Text(listaVaga[index].nome,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 18))
-                                            ]),
-                                          )
-                                        ])),
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text(listaVaga[index].endereco.cidade.nome,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
                                   ),
-                                  Divider(
-                                    color: Colors.grey,
-                                    height: 5,
-                                    thickness: 1,
-                                    indent: 20,
-                                    endIndent: 0,
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text("R\$ ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text(listaVaga[index].valor,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
                                   )
-                                ])
+                                ],
+                              )
+
+                            ])
                           ],
                         )))));
       },

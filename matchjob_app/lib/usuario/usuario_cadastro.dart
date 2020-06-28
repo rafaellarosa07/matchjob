@@ -272,9 +272,6 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
     );
   }
 
-  void _choose() async {
-    file = await FilePicker.getFile();
-  }
 
 
   String _validateEmail(String value) {

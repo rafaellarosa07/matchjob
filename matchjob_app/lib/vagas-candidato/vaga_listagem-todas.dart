@@ -59,21 +59,6 @@ class _VagaListagemTodasState extends State<VagaListagemTodas> {
 
 
 
-  void _visualizarVaga(Vaga vaga) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (BuildContext context) => VagaVisualizar(vaga: vaga)),
-            (Route<dynamic> route) => false);
-  }
-
-  Widget buildTex(String label, TextEditingController controller,
-      TextInputType textInputType) {
-    return Text(label,
-      style: TextStyle(color: Colors.grey[800], fontSize: 18),
-      textAlign: TextAlign.center,
-    );
-  }
-
   onItemChanged(String value) {
     setState(() {
       listaVaga  = newDataList
@@ -82,31 +67,103 @@ class _VagaListagemTodasState extends State<VagaListagemTodas> {
     });
   }
 
+
   Widget _listaDeVagas() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: listaVaga.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          child: ListTile(
-            //pego o nome do contato com base na posicao da lista
-            title: Text(listaVaga[index].nome),
+            onTap: () => _visualizarVaga(listaVaga[index]),
+            child: Container(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                height: 180,
+                width: double.maxFinite,
+                child: Card(
+                    elevation: 20,
+                    child: new Container(
+                        child: new Stack(
+                          children: <Widget>[
+                            Column(children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Row(children: <Widget>[
+                                      Icon(
+                                        Icons.email,
+                                        color: Colors.cyan[600],
+                                        size: 40,
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.fromLTRB(80, 0, 0, 0),
+                                        child: Row(children: <Widget>[
+                                          Text(listaVaga[index].nome,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18))
+                                        ]),
+                                      )
+                                    ])),
+                              ),
+                              Divider(
+                                color: Colors.grey,
+                                height: 5,
+                                thickness: 1,
+                                indent: 20,
+                                endIndent: 0,
+                              ),
 
-            //pego o email do contato com base na posicao da lista
-            subtitle: Text(listaVaga[index].email),
+                              Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text(listaVaga[index].endereco.cidade.nome,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text("R\$ ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: Row(children: <Widget>[
+                                      Text(listaVaga[index].valor,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14))
+                                    ]),
+                                  )
+                                ],
+                              )
 
-            leading: CircleAvatar(
-              //pego o nome do contato com base no indice
-              // da lista e pego a primeira letra do nome
-              child: Text(listaVaga[index].id.toString()),
-            ),
-          ),
-          //clique longo para atualizar
-          onTap: () => _visualizarVaga(listaVaga[index]),
-          //clique curto para remover
-        );
+                            ])
+                          ],
+                        )))));
       },
     );
+  }
+
+
+
+  void _visualizarVaga(Vaga vaga) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (BuildContext context) => VagaVisualizar(vaga: vaga)),
+            (Route<dynamic> route) => false);
   }
 
   _consultarVagas() async {
