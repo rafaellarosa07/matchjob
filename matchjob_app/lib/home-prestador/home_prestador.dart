@@ -38,13 +38,9 @@ class _HomePrestadorState extends State<HomePrestador>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Login()));
-            }),
-        title: new Text(""),
+        title: new Text("Match Job", textAlign: TextAlign.center,),
+        leading: Text(""),
+        centerTitle: true,
         backgroundColor: Colors.cyan[600],
         elevation: 0.0,
         actions: <Widget>[

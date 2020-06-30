@@ -107,11 +107,7 @@ class _CandidaturasState extends State<Candidaturas> {
                                     child: Text("Visualizar Curriculo"),
                                     onPressed: () {
                                       if (urlPDFPath != null) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PdfViewPage(path: _getFile(listaUsuario[index].id))));
+                                        _getFile(listaUsuario[index].id);
                                       }
                                     },
                                   ),
@@ -153,7 +149,11 @@ class _CandidaturasState extends State<Candidaturas> {
   String _getFile(int idUsuario){
     _getFileFromUrl(idUsuario).then((f) {
       setState(() {
-        return f.path;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) =>
+            PdfViewPage(path: f.path, vaga: widget.vaga)));
       });
     });
   }
@@ -172,8 +172,8 @@ class _CandidaturasState extends State<Candidaturas> {
       if (jsonResponse != null) {
         setState(() {
           _isLoading = false;
+          listaUsuario = jsonResponse.map((val) => Usuario.fromJson(val)).toList();
         });
-        listaUsuario = jsonResponse.map((val) => Usuario.fromJson(val)).toList();
       }
     }
   }

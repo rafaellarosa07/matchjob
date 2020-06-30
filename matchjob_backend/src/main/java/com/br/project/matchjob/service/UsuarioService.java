@@ -74,10 +74,16 @@ public class UsuarioService extends ConvertModelToDTO {
 
     private Usuario preencherUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
         tratamentoCnpjCpf(usuario, usuarioDTO);
-        usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setNome(usuarioDTO.getNome());
+        if (usuarioDTO.getEmail() != null && !usuarioDTO.getEmail().isEmpty()) {
+            usuario.setEmail(usuarioDTO.getEmail());
+        }
+        if (usuarioDTO.getNome() != null && !usuarioDTO.getNome().isEmpty()) {
+            usuario.setNome(usuarioDTO.getNome());
+        }
         usuario.setTipoPessoa(usuarioDTO.getTipoPessoa());
-        usuario.setSenha(usuarioDTO.getSenha());
+        if (usuarioDTO.getSenha() != null && !usuarioDTO.getSenha().isEmpty()) {
+            usuario.setSenha(usuarioDTO.getSenha());
+        }
         return usuario;
     }
 

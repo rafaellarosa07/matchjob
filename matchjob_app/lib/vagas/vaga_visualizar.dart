@@ -264,18 +264,21 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
   }
 
   _upload(callBack) async {
+    int usuario;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    usuario = sharedPreferences.get("pessoaLogada");
     file = await FilePicker.getFile();
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
     var length = await file.length();
 
     var uri = Uri.parse(Variavel.urlBase +
-        "usuario/curriculo/"); //I get the URL from some config
+        "usuario/curriculo/"+ usuario.toString()); //I get the URL from some config
 
     Map<String, String> headers = {"content-type": "multipart/form-data"};
 
     var request = new http.MultipartRequest("POST", uri);
     request.headers.addAll(headers);
-    var multipartFile = new http.MultipartFile('file', stream, length,
+    var multipartFile = new http.MultipartFile('file', stream, length, filename: "Curriculo-"+usuario.toString()+".pdf",
         contentType: new MediaType('multipart/form-data', 'pdf'));
 
     request.files.add(multipartFile);

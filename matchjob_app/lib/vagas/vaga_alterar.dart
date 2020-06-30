@@ -282,7 +282,8 @@ class _VagaAlterarState extends State<VagaAlterar> {
                   }
                   if(tipoMetodo == 2){
                     _delete(widget.vaga.id).whenComplete(() =>
-                        _closeLoading()
+                        _closeLoading(),
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => VagaListagem()))
                     );
                   }
                 }
@@ -444,9 +445,6 @@ class _VagaAlterarState extends State<VagaAlterar> {
           _isLoading = false;
         });
       }
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => VagaListagem()),
-          (Route<dynamic> route) => false);
     } else {
       _toastErro("Ocorreu um erro na Exclusão");
     }

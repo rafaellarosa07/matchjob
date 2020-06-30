@@ -16,6 +16,8 @@ import 'dart:io';
 import 'package:matchjob/vagas/vaga_cadastro.dart';
 import 'package:matchjob/vagas/minhas_vagas_listagem.dart';
 
+import '../login.dart';
+
 class HomePrestadorFront extends StatefulWidget {
   final AnimationController controller;
 
@@ -145,7 +147,7 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
             key: _formKey,
             child: new Column(children: <Widget>[
               SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -157,57 +159,16 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                         "Senha", passwordController, TextInputType.text),
                     buildTexFieldPassConfirmation(
                         "Confirme a Senha", passwordConfirmationController, TextInputType.text),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ToggleButtons(
-                        children: <Widget>[
-                          Padding(
-                              padding: EdgeInsets.all(20),
-                              child: Text("Quero Contratar")),
-                          Padding(
-                              padding: EdgeInsets.all(20),
-                              child: Text("Quero ser Contratado")),
-                        ],
-                        borderColor: Colors.white,
-                        selectedBorderColor: Colors.white,
-                        borderWidth: 2,
-                        highlightColor: Colors.white,
-                        color: Colors.white,
-                        fillColor: Colors.white,
-                        selectedColor: Colors.cyan[600],
-                        isSelected: isSelected,
-                        onPressed: (int index) {
-                          setState(() {
-                            for (int buttonIndex = 0;
-                                buttonIndex < isSelected.length;
-                                buttonIndex++) {
-                              if (buttonIndex == index) {
-                                if (index == 0) {
-                                  contratante = "C";
-                                  tipoPessoa = contratante;
-                                } else {
-                                  tipoPessoa = "P";
-                                  contratante = "P";
-                                  cnpjCpfController.text = "";
-                                }
-                                isSelected[buttonIndex] = true;
-                              } else {
-                                isSelected[buttonIndex] = false;
-                              }
-                            }
-                          });
-                        },
-                      ),
-                    ),
                     buildTexFieldCpfCnpj(
                         "CPF", cnpjCpfController, TextInputType.text),
+
                     RaisedButton(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
                           child: Text("Alterar",
                               style: TextStyle(
-                                  fontSize: 15, color: Colors.white))),
-                      color: Colors.cyan[600],
+                                  fontSize: 15, color: Colors.cyan[600]))),
+                      color: Colors.white,
                       onPressed: () {
                         setState(() {
                           _isLoading = true;
@@ -215,6 +176,17 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                         if (_formKey.currentState.validate()) {
                           _alterar();
                         }
+                      },
+                    ),
+                    RaisedButton(
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                          child: Text("Desconectar",
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.white))),
+                      color: Colors.cyan[600],
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
                       },
                     )
                   ],

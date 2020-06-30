@@ -39,25 +39,21 @@ class _HomeContratanteState extends State<HomeContratante>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Login()));
-            }),
-        title: new Text(""),
+        title: new Text("Match Job"),
+        leading: Text(""),
+        centerTitle: true,
         backgroundColor: Colors.cyan[600],
         elevation: 0.0,
         actions: <Widget>[
           new IconButton(
-          onPressed: () {
-            controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
-          },
-          icon: new AnimatedIcon(
-            icon: AnimatedIcons.close_menu,
-            progress: controller.view,
-          ),
-        )],
+            onPressed: () {
+              controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
+            },
+            icon: new AnimatedIcon(
+              icon: AnimatedIcons.close_menu,
+              progress: controller.view,
+            ),
+          )],
       ),
       body: new HomeContratanteFront(
         controller: controller,

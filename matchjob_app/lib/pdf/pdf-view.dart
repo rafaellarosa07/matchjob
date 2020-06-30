@@ -2,14 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:matchjob/model/vaga.dart';
+import 'package:matchjob/vagas/candidatura_minhas_vagas.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:http/http.dart' as http;
 
 class PdfViewPage extends StatefulWidget {
-  final String path;
 
-  const PdfViewPage({Key key, this.path}) : super(key: key);
+
+  const PdfViewPage({Key key, this.path, this.vaga}) : super(key: key);
+  final String path;
+  final Vaga vaga;
+
   @override
   _PdfViewPageState createState() => _PdfViewPageState();
 }
@@ -24,7 +29,18 @@ class _PdfViewPageState extends State<PdfViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Document"),
+        title: Text(
+          "Curriculo",
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.cyan[600],
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Candidaturas(vaga: widget.vaga)));
+            }),
       ),
       body: Stack(
         children: <Widget>[

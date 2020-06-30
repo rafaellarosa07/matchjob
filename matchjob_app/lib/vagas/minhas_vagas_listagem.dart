@@ -222,9 +222,9 @@ class _VagaListagemState extends State<VagaListagem> {
       if (jsonResponse != null) {
         setState(() {
           _isLoading = false;
+          newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
+          listaVaga = List.from(newDataList);
         });
-        newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
-        listaVaga = List.from(newDataList);
       }
     }
   }
