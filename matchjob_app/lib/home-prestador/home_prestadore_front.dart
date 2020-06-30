@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:matchjob/usuario/minhas_vagas.dart';
 import 'package:matchjob/util/variavel.dart';
 import 'package:matchjob/vagas-candidato/vaga_listagem-todas.dart';
@@ -405,6 +406,31 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     }
   }
 
+  _toastSucesso() {
+    Fluttertoast.showToast(
+        msg: "Alteração realizado com sucesso!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
+
+  _toastErro() {
+    Fluttertoast.showToast(
+        msg: "Erro ao Alterar!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
   _alterarRequest(uri, body) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String jsonResponse;
@@ -412,6 +438,7 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     var response = await http.put(Variavel.urlBase + "usuario",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
+      _toastSucesso();
       jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
@@ -422,6 +449,9 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                 builder: (BuildContext context) => VagaListagem()),
             (Route<dynamic> route) => false);
       }
+    }
+    else{
+      _toastErro();
     }
   }
 }

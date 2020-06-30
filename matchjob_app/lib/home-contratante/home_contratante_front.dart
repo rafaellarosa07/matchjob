@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:matchjob/util/variavel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
@@ -135,9 +136,16 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     usuario = Usuario.fromJson(
         jsonDecode(sharedPreferences.getString("pessoaLogadaObj")));
-    nomeController.text = usuario.nome;
-    cnpjCpfController.text = usuario.cpfCnpj;
-    emailController.text = usuario.email;
+    _preencherDados();
+
+  }
+
+  _preencherDados(){
+    setState(() {
+      nomeController.text = usuario.nome;
+      cnpjCpfController.text = usuario.cpfCnpj;
+      emailController.text = usuario.email;
+    });
   }
 
   Widget _alterarPerfil() {
@@ -159,14 +167,14 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                     buildTexFieldPassConfirmation(
                         "Confirme a Senha", passwordConfirmationController, TextInputType.text),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.fromLTRB(17, 20, 0, 20),
                       child: ToggleButtons(
                         children: <Widget>[
                           Padding(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
                               child: Text("Quero Contratar")),
                           Padding(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                               child: Text("Quero ser Contratado")),
                         ],
                         borderColor: Colors.white,
@@ -208,8 +216,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
                           child: Text("Alterar",
                               style: TextStyle(
-                                  fontSize: 15, color: Colors.white))),
-                      color: Colors.cyan[600],
+                                  fontSize: 15, color: Colors.cyan[600]))),
+                      color: Colors.white,
                       onPressed: () {
                         setState(() {
                           _isLoading = true;
@@ -223,6 +231,32 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                 ),
               ),
             ])));
+  }
+
+
+  _toastSucesso() {
+    Fluttertoast.showToast(
+        msg: "Alteração realizado com sucesso!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
+
+  _toastErro() {
+    Fluttertoast.showToast(
+        msg: "Erro ao Alterar!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
   }
 
   void navigateToView(BuildContext context, String navigationKey) {
@@ -264,15 +298,11 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       TextInputType textInputType) {
     return TextFormField(
       controller: controller,
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Por Favor digite um valor valido';
-        }
-        return null;
-      },
       keyboardType: textInputType,
       decoration: InputDecoration(
-          labelText: label, labelStyle: TextStyle(color: Colors.white)),
+          labelText: label, labelStyle: TextStyle(color: Colors.white),enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+      )),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.white, fontSize: 18),
     );
@@ -284,15 +314,14 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       obscureText: passwordConfirmVisible,
       controller: controller,
       validator: (val){
-        if(val.isEmpty)
-          return 'Vazio';
         if(val != passwordController.text)
           return 'A confirmação de Senha não Confere';
-        return null;
       },
       keyboardType: textInputType,
       decoration: InputDecoration(
         labelText: label,
+          enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(color: Colors.white)),
         labelStyle: TextStyle(color: Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
@@ -306,7 +335,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
               passwordConfirmVisible = !passwordConfirmVisible;
             });
           },
-        ),
+        )
       ),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.grey[800], fontSize: 18),
@@ -318,15 +347,11 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     return TextFormField(
       obscureText: passwordVisible,
       controller: controller,
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Por Favor digite um valor valido';
-        }
-        return null;
-      },
       keyboardType: textInputType,
       decoration: InputDecoration(
         labelText: label,
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)),
         labelStyle: TextStyle(color: Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
@@ -355,7 +380,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       validator: _validateEmail,
       keyboardType: textInputType,
       decoration: InputDecoration(
-          labelText: label, labelStyle: TextStyle(color: Colors.white)),
+          labelText: label, labelStyle: TextStyle(color: Colors.white),enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white))),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.white, fontSize: 18),
     );
@@ -411,6 +437,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     var response = await http.put(Variavel.urlBase+"usuario",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
+      _toastSucesso();
       jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
@@ -421,6 +448,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                 builder: (BuildContext context) => VagaListagem()),
             (Route<dynamic> route) => false);
       }
+    }else{
+      _toastErro();
     }
   }
 }

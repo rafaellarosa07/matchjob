@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:matchjob/model/autenticar.dart';
 import 'package:matchjob/usuario/usuario_cadastro.dart';
@@ -57,6 +58,8 @@ class _LoginState extends State<Login> {
                   builder: (BuildContext context) => HomePrestador()),
               (Route<dynamic> route) => false);
         }
+      }else{
+        _loginFailed();
       }
     } else {
       setState(() {
@@ -168,6 +171,18 @@ class _LoginState extends State<Login> {
                           ))
                     ],
                   )))),
+    );
+  }
+
+  _loginFailed() {
+    Fluttertoast.showToast(
+        msg: "Usuario ou Senha incorretos!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
     );
   }
 

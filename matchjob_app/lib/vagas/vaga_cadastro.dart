@@ -139,10 +139,9 @@ class _VagaCadastroState extends State<VagaCadastro> {
         usuario,
         nomeEmpresaController.text,
         new Endereco(null, null, int.parse(_cidadeId)));
-    _cadastrarPost("vaga", jsonEncode(vaga));
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => VagaListagem()),
-        (Route<dynamic> route) => false);
+    _cadastrarPost("usuario", jsonEncode(vaga))
+        .whenComplete(() =>
+        Navigator.push(context, MaterialPageRoute(builder: (context) => VagaListagem())));
   }
 
   Widget buildTexField(String label, TextEditingController controller,
@@ -205,16 +204,12 @@ class _VagaCadastroState extends State<VagaCadastro> {
     var response = await http.post(Variavel.urlBase + "vaga",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
+      _toastSucesso();
       jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
-        _toastSucesso();
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (BuildContext context) => VagaListagem()),
-            (Route<dynamic> route) => false);
       }
     } else {
       _toastErro();

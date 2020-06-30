@@ -9,6 +9,7 @@ class Usuario {
   Usuario(this.id, this.nome, this.cpfCnpj,this.tipoPessoa,this.email, this.senha);
 
   Map toJson() => {
+    'id': id,
     'nome': nome,
     'cpfCnpj': cpfCnpj,
     'tipoPessoa':tipoPessoa,

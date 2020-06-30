@@ -141,6 +141,16 @@ class _VagaListagemState extends State<VagaListagem> {
                                 padding:
                                 const EdgeInsets.fromLTRB(30, 10, 0, 0),
                                 child: Row(children: <Widget>[
+                                  Text(listaVaga[index].nomeEmpresa,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14))
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
                                   Text(listaVaga[index].endereco.cidade.nome,
                                       style: TextStyle(
                                           color: Colors.black,
@@ -167,8 +177,10 @@ class _VagaListagemState extends State<VagaListagem> {
                                           fontSize: 14))
                                 ]),
                               )
+
                             ],
-                          )
+                          ),
+
 
                         ])
                       ],

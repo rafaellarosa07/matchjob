@@ -187,74 +187,74 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
   void _showDialog() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        // retorna um objeto do tipo Dialog
-        return AlertDialog(
-          title: Text("Envio da Candidatura"),
-          content: Stack(
-            children: <Widget>[
-              Text("Selecione um Curriculo"),
-              Padding(
-                padding: EdgeInsets.fromLTRB(75, 40, 0, 0),
-                child: RaisedButton(
-                  color: Colors.cyan[600],
-                  onPressed: _upload,
-                  child: Text('Carregar Imagem'),
+      builder: (context) {
+        String contentText = "Content of Dialog";
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title: Text("Envio da Candidatura"),
+            content: Stack(
+              children: <Widget>[
+                Text("Selecione um Curriculo"),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(75, 40, 0, 0),
+                  child: RaisedButton(
+                    color: Colors.cyan[600],
+                    onPressed: () {
+                      _upload(() => {
+                            setState(() {
+                              fileName = file.path.split("/").last;
+                            })
+                          });
+                    },
+                    child: Text('Carregar Imagem'),
+                  ),
                 ),
-              ),
-              showImage()
-            ],
-          ),
-          actions: [
-            FlatButton(
-              child: Text("Cancelar"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+                showImage()
+              ],
             ),
-            FlatButton(
-                child: Text("Candidatar"),
+            actions: [
+              FlatButton(
+                child: Text("Cancelar"),
                 onPressed: () {
-                  _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                    duration: new Duration(seconds: 4),
-                    content: new Row(
-                      children: <Widget>[
-                        new CircularProgressIndicator(),
-                        new Text("  carregando...")
-                      ],
-                    ),
-                  ));
-                  _candidatar().whenComplete(() => _closeLoading());
-                })
-          ],
-        );
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                  child: Text("Candidatar"),
+                  onPressed: () {
+                    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      duration: new Duration(seconds: 4),
+                      content: new Row(
+                        children: <Widget>[
+                          new CircularProgressIndicator(),
+                          new Text("  carregando...")
+                        ],
+                      ),
+                    ));
+                    _candidatar().whenComplete(() => _closeLoading());
+                  })
+            ],
+          );
+        });
       },
     );
   }
 
   Widget showImage() {
-    if(fileName != null) {
+    if (fileName != null) {
       return Padding(
           padding: EdgeInsets.fromLTRB(0, 100, 0, 30),
           child: Card(
               color: Colors.cyan[100],
               child: Padding(
-                  padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
-                  child: Text(
-                      fileName
-
-                  ))));
-    }else {
+                  padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
+                  child: Text(fileName))));
+    } else {
       return Padding(
           padding: EdgeInsets.fromLTRB(0, 100, 0, 30),
-          child: Card(
-              child: Text(
-                      "Nenhum arquivo Selecionado"
-                  )));
+          child: Card(child: Text("Nenhum arquivo Selecionado")));
     }
   }
-
-
 
   _candidatar() {
     _candidatarRequest("vaga", widget.vaga.id);
@@ -263,7 +263,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
         (Route<dynamic> route) => false);
   }
 
-  _upload() async {
+  _upload(callBack) async {
     file = await FilePicker.getFile();
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
     var length = await file.length();
@@ -284,9 +284,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
     });
-    setState(() {
-      fileName = file.path.split('/').last;
-    });
+    callBack();
   }
 
   _toastSucesso() {
@@ -346,6 +344,53 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
         Text(controller.text,
             style: TextStyle(color: Colors.black, fontSize: 18))
       ]),
+    );
+  }
+}
+
+class MyDialog extends StatefulWidget {
+  const MyDialog({this.onValueChange, this.initialValue});
+
+  final String initialValue;
+  final void Function(String) onValueChange;
+
+  @override
+  State createState() => new MyDialogState();
+}
+
+class MyDialogState extends State<MyDialog> {
+  String _selectedId;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedId = widget.initialValue;
+  }
+
+  Widget build(BuildContext context) {
+    return new SimpleDialog(
+      title: new Text("New Dialog"),
+      children: <Widget>[
+        new Container(
+            padding: const EdgeInsets.all(10.0),
+            child: new DropdownButton<String>(
+              hint: const Text("Pick a thing"),
+              value: _selectedId,
+              onChanged: (String value) {
+                setState(() {
+                  _selectedId = value;
+                });
+                widget.onValueChange(value);
+              },
+              items:
+                  <String>['One', 'Two', 'Three', 'Four'].map((String value) {
+                return new DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(value),
+                );
+              }).toList(),
+            )),
+      ],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:matchjob/home-contratante/home_contratante.dart';
 import 'package:matchjob/model/vaga.dart';
 import 'package:matchjob/util/variavel.dart';
 import 'package:matchjob/vagas/vaga_visualizar.dart';
@@ -49,7 +50,7 @@ class _VagaListagemTodasState extends State<VagaListagemTodas> {
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                    context, MaterialPageRoute(builder: (context) => HomeContratante()));
               })
       ),
       body: _listaDeVagas(),

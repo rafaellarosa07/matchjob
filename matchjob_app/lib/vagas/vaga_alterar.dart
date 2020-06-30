@@ -46,23 +46,30 @@ class _VagaAlterarState extends State<VagaAlterar> {
   @protected
   @mustCallSuper
   void initState() {
+    _preencherDados();
     estados = new List<Estado>();
     cidades = new List<Cidade>();
     _buscarEstados();
   }
 
+  _preencherDados(){
+    setState(() {
+      widget.vaga;
+      nomeController.text = widget.vaga.nome;
+      descricaoController.text = widget.vaga.descricao;
+      estadoController.text = widget.vaga.endereco.cidade.estado.nome;
+      cidadeController.text = widget.vaga.endereco.cidade.nome;
+      nomeEmpresaController.text = widget.vaga.nomeEmpresa;
+      valorController.text = widget.vaga.valor;
+      emailController.text = widget.vaga.email;
+      _cidadeId = widget.vaga.endereco.cidade.id.toString();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    widget.vaga;
-    nomeController.text = widget.vaga.nome;
-    descricaoController.text = widget.vaga.descricao;
-    estadoController.text = widget.vaga.endereco.cidade.estado.nome;
-    cidadeController.text = widget.vaga.endereco.cidade.nome;
-    nomeEmpresaController.text = widget.vaga.nomeEmpresa;
-    valorController.text = widget.vaga.valor;
-    emailController.text = widget.vaga.email;
-    _cidadeId = widget.vaga.endereco.cidade.id.toString();
+
 
     return new Scaffold(
       key: _scaffoldKey,
@@ -269,6 +276,7 @@ class _VagaAlterarState extends State<VagaAlterar> {
                       ));
                   if(tipoMetodo == 1){
                     _salvar().whenComplete(() =>
+                        _preencherDados(),
                         _closeLoading()
                     );
                   }
@@ -410,16 +418,13 @@ class _VagaAlterarState extends State<VagaAlterar> {
     var response = await http.put(Variavel.urlBase + "vaga",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
+      _toastSucesso("Alterado com Sucesso!!");
       jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
-        _toastSucesso("Alterado com Sucesso!!");
         setState(() {
           _isLoading = false;
         });
       }
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => VagaListagem()),
-          (Route<dynamic> route) => false);
     } else {
       _toastErro("Ocorreu um erro na Alteração");
     }
@@ -432,9 +437,9 @@ class _VagaAlterarState extends State<VagaAlterar> {
     var response = await http.delete(Variavel.urlBase + "vaga/" + id.toString(),
         headers: {"Content-type": "application/json"});
     if (response.statusCode == 200) {
+      _toastSucesso("Excluido com Sucesso!!");
       jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
-        _toastSucesso("Excluido com Sucesso!!");
         setState(() {
           _isLoading = false;
         });

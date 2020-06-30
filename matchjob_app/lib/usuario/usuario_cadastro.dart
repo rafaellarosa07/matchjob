@@ -164,9 +164,9 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
   Future _cadastrar() async {
     Usuario usuario = Usuario(null, nomeController.text, cnpjCpfController.text,
         tipoPessoa, emailController.text, passwordController.text);
-    _cadastrarPost("usuario", jsonEncode(usuario));
-//        .whenComplete(() =>
-//        Navigator.push(context, MaterialPageRoute(builder: (context) => Login())));
+    _cadastrarPost("usuario", jsonEncode(usuario))
+        .whenComplete(() =>
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Login())));
   }
 
   Widget buildTexField(String label, TextEditingController controller,
@@ -326,8 +326,8 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
     var response = await http.post(Variavel.urlBase + "usuario",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
-      jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       _toastSucesso();
+      jsonResponse = response.body.isEmpty ? null : json.decode(response.body);
       if (jsonResponse != null) {
         setState(() {
           _isLoading = false;
