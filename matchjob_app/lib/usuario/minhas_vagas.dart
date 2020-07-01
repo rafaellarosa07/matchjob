@@ -36,7 +36,7 @@ class _MinhasVagasState extends State<MinhasVagas> {
     return Scaffold(
       appBar: AppBar(
           title: new TextField(
-              style: TextStyle(color: Colors.white, fontSize: 17),
+           style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
               decoration: InputDecoration(
                 hintText: 'Pesquisar',
                 hintStyle: TextStyle(

@@ -48,10 +48,10 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
       appBar: AppBar(
         title: Text(
           "Cadastrar",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -98,12 +98,12 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
                                 padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                                 child: Text("Quero ser Contratado")),
                           ],
-                          borderColor: Colors.cyan[600],
-                          selectedBorderColor: Colors.cyan[600],
+                          borderColor: Colors.indigo[400],
+                          selectedBorderColor: Colors.indigo[400],
                           borderWidth: 2,
-                          highlightColor: Colors.cyan[600],
-                          color: Colors.cyan[600],
-                          fillColor: Colors.cyan[600],
+                          highlightColor: Colors.indigo[400],
+                          color: Colors.indigo[400],
+                          fillColor: Colors.indigo[400],
                           selectedColor: Colors.white,
                           isSelected: isSelected,
                           onPressed: (int index) {
@@ -145,7 +145,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
                                 child: Text("Cadastrar",
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.white))),
-                            color: Colors.cyan[600],
+                            color: Colors.indigo[400],
                             onPressed: () {
                               setState(() {
                                 _isLoading = true;
@@ -210,7 +210,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
             passwordConfirmVisible
                 ? Icons.visibility
                 : Icons.visibility_off,
-            color: Colors.cyan[600],
+            color: Colors.indigo[400],
           ),
           onPressed: () {
             setState(() {
@@ -245,7 +245,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
             passwordVisible
                 ? Icons.visibility
                 : Icons.visibility_off,
-            color: Colors.cyan[600],
+            color: Colors.indigo[400],
           ),
           onPressed: () {
             setState(() {

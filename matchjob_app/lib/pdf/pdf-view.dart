@@ -34,7 +34,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {

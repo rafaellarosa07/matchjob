@@ -77,7 +77,7 @@ class _CandidaturasState extends State<Candidaturas> {
                                         child: Row(children: <Widget>[
                                           Icon(
                                             Icons.email,
-                                            color: Colors.cyan[600],
+                                            color: Colors.indigo[400],
                                             size: 40,
                                           ),
                                           Padding(
@@ -100,7 +100,7 @@ class _CandidaturasState extends State<Candidaturas> {
                                     endIndent: 0,
                                   ),
                                   RaisedButton(
-                                    color: Colors.cyan[600],
+                                    color: Colors.indigo[400],
                                     child: Text("Visualizar Curriculo"),
                                     onPressed: () {
                                       if (urlPDFPath != null) {

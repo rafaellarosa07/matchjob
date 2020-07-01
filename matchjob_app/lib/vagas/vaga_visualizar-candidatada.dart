@@ -53,7 +53,7 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
       appBar: AppBar(
         title: Text(
           "Vaga",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
         ),
         centerTitle: true,
         backgroundColor: Colors.indigo[400],

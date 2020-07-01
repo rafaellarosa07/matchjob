@@ -436,7 +436,7 @@ class HeaderWidget extends StatelessWidget {
       child: Text(
         text.toUpperCase(),
         style: TextStyle(
-            color: Colors.cyan[600], fontSize: 16, fontWeight: FontWeight.bold),
+            color: Colors.indigo[400], fontSize: 16, fontWeight: FontWeight.bold),
       ),
       color: Colors.white,
     );
@@ -455,7 +455,7 @@ class BodyWidget extends StatelessWidget {
     return Container(
         alignment: Alignment.center,
         child: Card(
-            color: Colors.cyan[600],
+            color: Colors.indigo[400],
             elevation: 5,
             child: Container(
               decoration: BoxDecoration(
