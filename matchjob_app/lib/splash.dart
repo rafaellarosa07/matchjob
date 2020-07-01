@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:matchjob/login.dart';
 
 
@@ -14,7 +15,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([]);
-    Future.delayed(Duration(seconds: 30)).then((_){
+    Future.delayed(Duration(seconds: 40)).then((_){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
     });
   }
@@ -28,7 +29,11 @@ class _SplashState extends State<Splash> {
             width: 150,
             height: 150,
             child: new Container(
-              color: Colors.indigo[400],
+              height: (MediaQuery.of(context).size.height-500),
+              child: new Center(
+                child: Lottie.asset('images/coracao.json'),
+              ),
+              color: Colors.transparent,
             ),
           ),
         )

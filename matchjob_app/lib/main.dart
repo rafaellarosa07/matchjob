@@ -7,8 +7,7 @@ import 'package:matchjob/login.dart';
 import 'package:matchjob/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MaterialApp(title: "Match Job", home : Home()));
-
+void main() => runApp(MaterialApp(title: "Match Job", home: Home()));
 
 class Home extends StatefulWidget {
   @override
@@ -16,7 +15,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   SharedPreferences sharedPreferences;
 
   @override
@@ -27,21 +25,25 @@ class _HomeState extends State<Home> {
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if(sharedPreferences.getString("token") == null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+    if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Login()),
+          (Route<dynamic> route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '',
-      theme: new ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: new Splash(),
-    );
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    return new WillPopScope(
+        onWillPop: () async => false,
+        child: new MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: '',
+          theme: new ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: new Splash(),
+        ));
   }
 }
