@@ -16,7 +16,6 @@ import 'package:matchjob/vagas/minhas_vagas_listagem.dart';
 
 import '../login.dart';
 
-
 class HomeContratanteFront extends StatefulWidget {
   final AnimationController controller;
 
@@ -37,7 +36,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
   Usuario usuario;
   final List<bool> isSelected = List.generate(2, (_) => false);
   final TextEditingController nomeController = new TextEditingController();
-  final TextEditingController passwordConfirmationController = new TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      new TextEditingController();
   final TextEditingController cnpjCpfController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
@@ -63,7 +63,11 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       child: new Stack(
         children: <Widget>[
           new Container(
-            color: Colors.cyan[600],
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [Colors.blue, Colors.red])),
             child: new Center(child: _alterarPerfil()),
           ),
           new PositionedTransition(
@@ -139,10 +143,9 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     usuario = Usuario.fromJson(
         jsonDecode(sharedPreferences.getString("pessoaLogadaObj")));
     _preencherDados();
-
   }
 
-  _preencherDados(){
+  _preencherDados() {
     setState(() {
       tipoPessoa = usuario.tipoPessoa;
       nomeController.text = usuario.nome;
@@ -167,12 +170,10 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                         "Email", emailController, TextInputType.emailAddress),
                     buildTexFieldPass(
                         "Senha", passwordController, TextInputType.text),
-                    buildTexFieldPassConfirmation(
-                        "Confirme a Senha", passwordConfirmationController, TextInputType.text),
-
+                    buildTexFieldPassConfirmation("Confirme a Senha",
+                        passwordConfirmationController, TextInputType.text),
                     buildTexFieldCpfCnpj(
                         "CPF", cnpjCpfController, TextInputType.text),
-
                     RaisedButton(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
@@ -197,7 +198,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                                   fontSize: 15, color: Colors.white))),
                       color: Colors.cyan[600],
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login()));
                       },
                     )
                   ],
@@ -205,7 +207,6 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
               ),
             ])));
   }
-
 
   _toastSucesso() {
     Fluttertoast.showToast(
@@ -215,10 +216,8 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.green,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
-
 
   _toastErro() {
     Fluttertoast.showToast(
@@ -228,8 +227,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
   void navigateToView(BuildContext context, String navigationKey) {
@@ -261,8 +259,13 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
   }
 
   _alterar() {
-    Usuario usuario = Usuario(this.usuario.id, nomeController.text, cnpjCpfController.text,
-        tipoPessoa, emailController.text, passwordController.text);
+    Usuario usuario = Usuario(
+        this.usuario.id,
+        nomeController.text,
+        cnpjCpfController.text,
+        tipoPessoa,
+        emailController.text,
+        passwordController.text);
     _alterarRequest("usuario", jsonEncode(usuario));
 //    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
@@ -273,43 +276,42 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       controller: controller,
       keyboardType: textInputType,
       decoration: InputDecoration(
-          labelText: label, labelStyle: TextStyle(color: Colors.white),enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-      )),
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.white),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          )),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.white, fontSize: 18),
     );
   }
 
-  Widget buildTexFieldPassConfirmation(String label, TextEditingController controller,
-      TextInputType textInputType) {
+  Widget buildTexFieldPassConfirmation(String label,
+      TextEditingController controller, TextInputType textInputType) {
     return TextFormField(
       obscureText: passwordConfirmVisible,
       controller: controller,
-      validator: (val){
-        if(val != passwordController.text)
+      validator: (val) {
+        if (val != passwordController.text)
           return 'A confirmação de Senha não Confere';
       },
       keyboardType: textInputType,
       decoration: InputDecoration(
-        labelText: label,
-          enabledBorder: UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.white)),
-        labelStyle: TextStyle(color: Colors.white),
-        suffixIcon: IconButton(
-          icon: Icon(
-            passwordConfirmVisible
-                ? Icons.visibility
-                : Icons.visibility_off,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            setState(() {
-              passwordConfirmVisible = !passwordConfirmVisible;
-            });
-          },
-        )
-      ),
+          labelText: label,
+          enabledBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          labelStyle: TextStyle(color: Colors.white),
+          suffixIcon: IconButton(
+            icon: Icon(
+              passwordConfirmVisible ? Icons.visibility : Icons.visibility_off,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                passwordConfirmVisible = !passwordConfirmVisible;
+              });
+            },
+          )),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.grey[800], fontSize: 18),
     );
@@ -323,14 +325,12 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       keyboardType: textInputType,
       decoration: InputDecoration(
         labelText: label,
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
+        enabledBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
         labelStyle: TextStyle(color: Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
-            passwordVisible
-                ? Icons.visibility
-                : Icons.visibility_off,
+            passwordVisible ? Icons.visibility : Icons.visibility_off,
             color: Colors.white,
           ),
           onPressed: () {
@@ -345,7 +345,6 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     );
   }
 
-
   Widget buildTexFieldEmail(String label, TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
@@ -353,13 +352,14 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
       validator: _validateEmail,
       keyboardType: textInputType,
       decoration: InputDecoration(
-          labelText: label, labelStyle: TextStyle(color: Colors.white),enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white))),
+          labelText: label,
+          labelStyle: TextStyle(color: Colors.white),
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white))),
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.white, fontSize: 18),
     );
   }
-
 
   String _validateEmail(String value) {
     if (value.isEmpty) {
@@ -407,7 +407,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String jsonResponse;
 
-    var response = await http.put(Variavel.urlBase+"usuario",
+    var response = await http.put(Variavel.urlBase + "usuario",
         headers: {"Content-type": "application/json"}, body: body);
     if (response.statusCode == 200) {
       _toastSucesso();
@@ -421,7 +421,7 @@ class _HomeContratanteFrontState extends State<HomeContratanteFront> {
                 builder: (BuildContext context) => VagaListagem()),
             (Route<dynamic> route) => false);
       }
-    }else{
+    } else {
       _toastErro();
     }
   }
@@ -469,7 +469,7 @@ class BodyWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child:
-                  Container(margin: EdgeInsets.only(top: 40), child: icon),
+                      Container(margin: EdgeInsets.only(top: 40), child: icon),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

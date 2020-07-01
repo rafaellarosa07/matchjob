@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:matchjob/usuario/minhas_vagas.dart';
+import 'package:matchjob/util/custom_backgroud.dart';
 import 'package:matchjob/util/variavel.dart';
 import 'package:matchjob/vagas-candidato/vaga_listagem-todas.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,7 +43,8 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
   final TextEditingController cnpjCpfController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordConfirmationController = new TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      new TextEditingController();
   String tipoPessoa = "";
 
   Animation<RelativeRect> getPanelAnimation(BoxConstraints constraints) {
@@ -61,10 +64,19 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     final ThemeData theme = Theme.of(context);
 
     return new Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blue, Colors.red])),
       child: new Stack(
         children: <Widget>[
           new Container(
-            color: Colors.cyan[600],
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [Colors.blue, Colors.red])),
             child: new Center(child: _alterarPerfil()),
           ),
           new PositionedTransition(
@@ -74,51 +86,45 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                 borderRadius: new BorderRadius.only(
                     topLeft: new Radius.circular(16.0),
                     topRight: new Radius.circular(16.0)),
-                child: new Column(children: <Widget>[
-                  new Container(
-                    height: header_height,
-                    child: new Center(
-                      child: new Text(
-                        "",
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                    ),
-                  ),
-                  new Expanded(
-                      child: Container(
-                    color: Colors.white,
-                    margin: EdgeInsets.only(
-                        left: 4.0, right: 4, bottom: 4, top: 300),
-                    child: CustomScrollView(
-                      slivers: <Widget>[
-                        SliverList(
-                          delegate: SliverChildListDelegate(
-                            [],
-                          ),
-                        ),
-                        SliverGrid(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          delegate: SliverChildListDelegate(
-                            [
-                              BodyWidget(
-                                  "Vagas",
-                                  "vagasListagem",
-                                  Icon(Icons.assignment,
-                                      size: 80, color: Colors.white)),
-                              BodyWidget(
-                                  "Minhas Candidaturas",
-                                  "vagasListagemMinhas",
-                                  Icon(Icons.assignment,
-                                      size: 80, color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))
-                ])),
+                child: Container(
+                    color: Colors.red,
+                    child: CustomPaint(
+                        painter: CustomBackGround(),
+                        child: new Column(children: <Widget>[
+                          new Expanded(
+                              child: Container(
+                            margin: EdgeInsets.only(
+                                left: 4.0, right: 4, bottom: 4, top: 300),
+                            child: CustomScrollView(
+                              slivers: <Widget>[
+                                SliverList(
+                                  delegate: SliverChildListDelegate(
+                                    [],
+                                  ),
+                                ),
+                                SliverGrid(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2),
+                                  delegate: SliverChildListDelegate(
+                                    [
+                                      BodyWidget(
+                                          "Vagas",
+                                          "vagasListagem",
+                                          Icon(Icons.assignment,
+                                              size: 80, color: Colors.white)),
+                                      BodyWidget(
+                                          "Minhas Candidaturas",
+                                          "vagasListagemMinhas",
+                                          Icon(Icons.assignment,
+                                              size: 80, color: Colors.white)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
+                        ])))),
           ),
         ],
       ),
@@ -157,17 +163,16 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                         "Email", emailController, TextInputType.emailAddress),
                     buildTexFieldPass(
                         "Senha", passwordController, TextInputType.text),
-                    buildTexFieldPassConfirmation(
-                        "Confirme a Senha", passwordConfirmationController, TextInputType.text),
+                    buildTexFieldPassConfirmation("Confirme a Senha",
+                        passwordConfirmationController, TextInputType.text),
                     buildTexFieldCpfCnpj(
                         "CPF", cnpjCpfController, TextInputType.text),
-
                     RaisedButton(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
                           child: Text("Alterar",
-                              style: TextStyle(
-                                  fontSize: 15, color: Colors.cyan[600]))),
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.red))),
                       color: Colors.white,
                       onPressed: () {
                         setState(() {
@@ -184,9 +189,10 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                           child: Text("Desconectar",
                               style: TextStyle(
                                   fontSize: 15, color: Colors.white))),
-                      color: Colors.cyan[600],
+                      color: Colors.indigo[400],
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login()));
                       },
                     )
                   ],
@@ -266,7 +272,6 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     );
   }
 
-
   String _validateEmail(String value) {
     if (value.isEmpty) {
       // The form is empty
@@ -291,15 +296,14 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
     return 'Email não é valido';
   }
 
-  Widget buildTexFieldPassConfirmation(String label, TextEditingController controller,
-      TextInputType textInputType) {
+  Widget buildTexFieldPassConfirmation(String label,
+      TextEditingController controller, TextInputType textInputType) {
     return TextFormField(
       obscureText: passwordConfirmVisible,
       controller: controller,
-      validator: (val){
-        if(val.isEmpty)
-          return 'Vazio';
-        if(val != passwordController.text)
+      validator: (val) {
+        if (val.isEmpty) return 'Vazio';
+        if (val != passwordController.text)
           return 'A confirmação de Senha não Confere';
         return null;
       },
@@ -309,9 +313,7 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
         labelStyle: TextStyle(color: Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
-            passwordConfirmVisible
-                ? Icons.visibility
-                : Icons.visibility_off,
+            passwordConfirmVisible ? Icons.visibility : Icons.visibility_off,
             color: Colors.white,
           ),
           onPressed: () {
@@ -343,9 +345,7 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
         labelStyle: TextStyle(color: Colors.white),
         suffixIcon: IconButton(
           icon: Icon(
-            passwordVisible
-                ? Icons.visibility
-                : Icons.visibility_off,
+            passwordVisible ? Icons.visibility : Icons.visibility_off,
             color: Colors.white,
           ),
           onPressed: () {
@@ -386,10 +386,8 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.green,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
-
 
   _toastErro() {
     Fluttertoast.showToast(
@@ -399,8 +397,7 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
   _alterarRequest(uri, body) async {
@@ -421,30 +418,29 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
                 builder: (BuildContext context) => VagaListagem()),
             (Route<dynamic> route) => false);
       }
-    }
-    else{
+    } else {
       _toastErro();
     }
   }
 }
 
 class HeaderWidget extends StatelessWidget {
-final String text;
+  final String text;
 
-HeaderWidget(this.text);
+  HeaderWidget(this.text);
 
-@override
-Widget build(BuildContext context) {
-  return Container(
-    padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 2, top: 20),
-    child: Text(
-      text.toUpperCase(),
-      style: TextStyle(
-          color: Colors.cyan[600], fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-    color: Colors.white,
-  );
-}
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 2, top: 20),
+      child: Text(
+        text.toUpperCase(),
+        style: TextStyle(
+            color: Colors.cyan[600], fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      color: Colors.white,
+    );
+  }
 }
 
 class BodyWidget extends StatelessWidget {
@@ -459,43 +455,49 @@ class BodyWidget extends StatelessWidget {
     return Container(
         alignment: Alignment.center,
         child: Card(
-          color: Colors.cyan[600],
-          elevation: 5,
-          child: InkWell(
-            onTap: () {
-              navigateToView(context, navigationKey);
-            },
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topCenter,
-                  child:
-                  Container(margin: EdgeInsets.only(top: 40), child: icon),
+            color: Colors.cyan[600],
+            elevation: 5,
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [Colors.blue, Colors.red])),
+              child: InkWell(
+                onTap: () {
+                  navigateToView(context, navigationKey);
+                },
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                          margin: EdgeInsets.only(top: 40), child: icon),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        verticalDirection: VerticalDirection.up,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            color: Colors.black.withOpacity(.2),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    verticalDirection: VerticalDirection.up,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        color: Colors.black.withOpacity(.2),
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            )));
   }
 
   void navigateToView(BuildContext context, String navigationKey) {

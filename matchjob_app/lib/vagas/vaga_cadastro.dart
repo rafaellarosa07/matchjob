@@ -62,7 +62,7 @@ class _VagaCadastroState extends State<VagaCadastro> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -70,7 +70,7 @@ class _VagaCadastroState extends State<VagaCadastro> {
                   MaterialPageRoute(builder: (context) => HomeContratante()));
             }),
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.indigo[50],
       body: new SingleChildScrollView(
         child: new Form(
             key: _formKey,
@@ -109,7 +109,7 @@ class _VagaCadastroState extends State<VagaCadastro> {
                   RaisedButton(
                     child: Text("Cadastrar",
                         style: TextStyle(fontSize: 15, color: Colors.white)),
-                    color: Colors.cyan[600],
+                    color: Colors.indigo[400],
                     onPressed: () {
                       setState(() {
                         _isLoading = true;

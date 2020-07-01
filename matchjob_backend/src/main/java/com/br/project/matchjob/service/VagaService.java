@@ -92,6 +92,7 @@ public class VagaService extends ConvertModelToDTO {
             Vaga vaga = vagaRepository.findById(id).orElseThrow(() ->
                     new ResourceNotFoundException("Vaga não encontrada para o  id :: " + id));
 
+            removerVagaUsuario(vaga);
             vagaRepository.delete(vaga);
             mensagem = new Mensagem("Vaga Excluído com Sucesso!", id, "success", true);
             return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
@@ -99,6 +100,15 @@ public class VagaService extends ConvertModelToDTO {
         } catch (Exception e) {
             mensagem = new Mensagem("Erro ao tentar excluir", id, "error", false);
             return new ResponseEntity<Mensagem>(mensagem, HttpStatus.OK);
+        }
+    }
+
+
+    private void removerVagaUsuario(Vaga vaga){
+        List<Usuario> usuarios = usuarioRepository.findCandidaturasByIdVaga(vaga.getId());
+        for (Usuario usuario :usuarios) {
+            usuario.getVagas().remove(vaga);
+            usuarioRepository.save(usuario);
         }
     }
 

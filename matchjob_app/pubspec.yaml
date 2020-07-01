@@ -33,6 +33,7 @@ dependencies:
   path_provider:
   font_awesome_flutter: ^8.0.1
   fluttertoast: ^4.0.0
+  lottie:
 
 
 dev_dependencies:
@@ -64,7 +65,10 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-
+  fonts:
+    - family: MyFont
+      fonts:
+        - asset: assets/my_font.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -74,6 +78,9 @@ flutter:
   assets:
     - images/fundo-azul.jpg
     - images/login_logo.png
+    - images/lupa.json
+    - images/coracao.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

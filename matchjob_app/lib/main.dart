@@ -7,8 +7,6 @@ import 'package:matchjob/login.dart';
 import 'package:matchjob/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'login_page.dart';
-
 void main() => runApp(MaterialApp(title: "Match Job", home : Home()));
 
 

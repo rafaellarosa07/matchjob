@@ -38,10 +38,10 @@ class _HomePrestadorState extends State<HomePrestador>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Match Job", textAlign: TextAlign.center,),
+        title: new Text("Match Job", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),),
         leading: Text(""),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         elevation: 0.0,
         actions: <Widget>[
           new IconButton(

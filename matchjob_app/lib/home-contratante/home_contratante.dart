@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:matchjob/login.dart';
-
-import 'home_contratante_front.dart';
+import 'package:matchjob/home-contratante/home_contratante_front.dart';
 
 
 class HomeContratante extends StatefulWidget {
   @override
-  _HomeContratanteState createState() => new _HomeContratanteState();
+  _HomePrestadorState createState() => new _HomePrestadorState();
 }
 
-class _HomeContratanteState extends State<HomeContratante>
+class _HomePrestadorState extends State<HomeContratante>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
 
@@ -39,10 +36,10 @@ class _HomeContratanteState extends State<HomeContratante>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Match Job"),
+        title: new Text("Match Job", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),),
         leading: Text(""),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         elevation: 0.0,
         actions: <Widget>[
           new IconButton(

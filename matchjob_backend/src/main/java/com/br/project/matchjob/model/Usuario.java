@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
     @Column(name = "senha", length = 40)
     private String senha;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "usuario_vaga",
             joinColumns = @JoinColumn(name = "fk_usuario"),

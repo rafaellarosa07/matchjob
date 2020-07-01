@@ -39,12 +39,9 @@ class _CandidaturasState extends State<Candidaturas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Candidatos",
-            style: TextStyle(color: Colors.white),
-          ),
+          title: new Text("Candidatos", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),),
           centerTitle: true,
-          backgroundColor: Colors.cyan[600],
+          backgroundColor: Colors.indigo[400],
           leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
@@ -52,7 +49,7 @@ class _CandidaturasState extends State<Candidaturas> {
                     context, MaterialPageRoute(builder: (context) => VagaListagem()));
               })),
       body: _listaDeCandidatos(),
-    );;
+    );
   }
 
   Widget _listaDeCandidatos() {

@@ -58,7 +58,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -66,7 +66,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                   MaterialPageRoute(builder: (context) => VagaListagemTodas()));
             }),
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.indigo[50],
       body: new SingleChildScrollView(
         child: new Form(
             key: _formKey,
@@ -82,7 +82,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                       child: Text(nomeController.text,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.cyan,
+                              color: Colors.indigo[400],
                               fontSize: 34))),
                   Divider(
                     color: Colors.grey,
@@ -98,7 +98,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                           Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                               child: Text(
-                                  "Empresa: " + nomeEmpresaController.text,
+                                  nomeEmpresaController.text,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 18))),
                           Text("   " + cidadeController.text,
@@ -129,9 +129,9 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                         children: <Widget>[
                           Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: Text("Sobre a Vaga",
-                                  style: TextStyle(
-                                      color: Colors.cyan, fontSize: 18)))
+                              child: Text("Sobre a Vaga: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                      color: Colors.indigo[400], fontSize: 18)))
                         ],
                       )),
                   buildTexFieldDescricao(
@@ -139,7 +139,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                   RaisedButton(
                     child: Text("Candidatar",
                         style: TextStyle(fontSize: 15, color: Colors.white)),
-                    color: Colors.cyan[600],
+                    color: Colors.indigo[400],
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
@@ -198,7 +198,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(75, 40, 0, 0),
                   child: RaisedButton(
-                    color: Colors.cyan[600],
+                    color: Colors.indigo[400],
                     onPressed: () {
                       _upload(() => {
                             setState(() {
@@ -206,7 +206,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
                             })
                           });
                     },
-                    child: Text('Carregar Imagem'),
+                    child: Text('Carregar Imagem', style: TextStyle(color: Colors.white),),
                   ),
                 ),
                 showImage()
@@ -245,7 +245,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
       return Padding(
           padding: EdgeInsets.fromLTRB(0, 100, 0, 30),
           child: Card(
-              color: Colors.cyan[100],
+              color: Colors.indigo[100],
               child: Padding(
                   padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
                   child: Text(fileName))));

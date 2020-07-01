@@ -56,7 +56,7 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan[600],
+        backgroundColor: Colors.indigo[400],
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -64,7 +64,7 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                   MaterialPageRoute(builder: (context) => MinhasVagas()));
             }),
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.indigo[50],
       body: new SingleChildScrollView(
         child: new Form(
             key: _formKey,
@@ -80,7 +80,7 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                               child: Text(nomeController.text,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.cyan,
+                                      color: Colors.indigo[400],
                                       fontSize: 34))),
                           Divider(
                             color: Colors.grey,
@@ -94,22 +94,17 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                               child: Row(
                                 children: <Widget>[
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 10, 0),
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                       child: Text(
-                                          "Empresa: " +
-                                              nomeEmpresaController.text,
+                                          nomeEmpresaController.text,
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18))),
+                                              color: Colors.black, fontSize: 18))),
                                   Text("   " + cidadeController.text,
                                       style:
-                                      TextStyle(
-                                          color: Colors.black, fontSize: 16)),
+                                      TextStyle(color: Colors.black, fontSize: 16)),
                                   Text(" - " + ufController.text,
                                       style:
-                                      TextStyle(
-                                          color: Colors.black, fontSize: 16))
+                                      TextStyle(color: Colors.black, fontSize: 16))
                                 ],
                               )),
                           Padding(
@@ -117,17 +112,13 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                               child: Row(
                                 children: <Widget>[
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 10, 0),
-                                      child: Text(
-                                          "Valor: R\$ " + valorController.text,
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                      child: Text("Valor: R\$ " + valorController.text,
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))),
+                                              color: Colors.black, fontSize: 16))),
                                   Text("Email: " + emailController.text,
                                       style:
-                                      TextStyle(
-                                          color: Colors.black, fontSize: 16))
+                                      TextStyle(color: Colors.black, fontSize: 16))
                                 ],
                               )),
                           Padding(
@@ -135,12 +126,10 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                               child: Row(
                                 children: <Widget>[
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 10, 0),
-                                      child: Text("Sobre a Vaga",
-                                          style: TextStyle(
-                                              color: Colors.cyan,
-                                              fontSize: 18)))
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                      child: Text("Sobre a Vaga: ",
+                                          style: TextStyle(fontWeight: FontWeight.bold,
+                                              color: Colors.indigo[400], fontSize: 18)))
                                 ],
                               )),
                           buildTexFieldDescricao(
@@ -149,7 +138,7 @@ class _VagaVisualizarCandidatadaState extends State<VagaVisualizarCandidatada> {
                             child: Text("Cancelar Candidatura",
                                 style: TextStyle(fontSize: 15, color: Colors
                                     .white)),
-                            color: Colors.cyan[600],
+                            color: Colors.indigo[400],
                             onPressed: () {
                               setState(() {
                                 _isLoading = true;
