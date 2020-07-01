@@ -172,6 +172,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
   Widget buildTexField(String label, TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
+      maxLength: 100,
       controller: controller,
       validator: (value) {
         if (value.isEmpty) {
@@ -191,6 +192,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
       TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
+      maxLength: 10,
       obscureText: passwordConfirmVisible,
       controller: controller,
       validator: (val) {
@@ -227,6 +229,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
   Widget buildTexFieldPass(String label, TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
+      maxLength: 10,
       obscureText: passwordVisible,
       controller: controller,
       validator: (value) {
@@ -262,6 +265,7 @@ class _UsuarioCadastroState extends State<UsuarioCadastro> {
   Widget buildTexFieldEmail(String label, TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
+      maxLength: 100,
       controller: controller,
       validator: _validateEmail,
       keyboardType: textInputType,

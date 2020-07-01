@@ -362,6 +362,7 @@ class _VagaAlterarState extends State<VagaAlterar> {
   Widget buildTexField(String label, TextEditingController controller,
       TextInputType textInputType) {
     return TextFormField(
+      maxLength: 100,
       controller: controller,
       validator: (value) {
         if (value.isEmpty) {
@@ -392,9 +393,10 @@ class _VagaAlterarState extends State<VagaAlterar> {
           Padding(
               padding: EdgeInsets.only(top: 10.0),
               child: TextField(
+                  maxLength: 2000,
                   controller: descricaoController,
                   minLines: 10,
-                  maxLines: 15,
+                  maxLines: 20,
                   autocorrect: false,
                   decoration: InputDecoration(
                     hintText: 'Digite Aqui',
