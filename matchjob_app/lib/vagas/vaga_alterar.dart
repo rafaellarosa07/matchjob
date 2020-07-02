@@ -280,10 +280,13 @@ class _VagaAlterarState extends State<VagaAlterar> {
                         _closeLoading()
                     );
                   }
+
                   if(tipoMetodo == 2){
                     _delete(widget.vaga.id).whenComplete(() =>
-                        _closeLoading(),
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => VagaListagem()))
+                        setState(() {
+                          _closeLoading();
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => VagaListagem()));
+                        })
                     );
                   }
                 }
