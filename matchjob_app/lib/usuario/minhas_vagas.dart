@@ -181,7 +181,7 @@ class _MinhasVagasState extends State<MinhasVagas> {
     var response = await http.get(
         Variavel.urlBase+"vaga/minhas-vagas/" + usuario.toString(),
         headers: {"Content-type": "application/json"});
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 204) {
       jsonResponse = response.body.isEmpty ? null : jsonDecode(response.body);
       if (jsonResponse != null) {
         setState(() {
@@ -189,7 +189,11 @@ class _MinhasVagasState extends State<MinhasVagas> {
           newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
           listaVaga = List.from(newDataList);
         });
+      }else{
+        newDataList = new List<Vaga>();
+        listaVaga = List.from(newDataList);
       }
+
     }
   }
 }
