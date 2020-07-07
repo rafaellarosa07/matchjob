@@ -152,11 +152,12 @@ class _VagaListagemState extends State<VagaListagem> {
                                 padding:
                                     const EdgeInsets.fromLTRB(30, 10, 0, 0),
                                 child: Row(children: <Widget>[
-                                  Text(listaVaga[index].endereco.cidade.nome,
+                                  Text(listaVaga[index].endereco.cidade.nome + " - " + listaVaga[index].endereco.cidade.estado.uf,
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 16))
                                 ]),
                               ),
+
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(30, 10, 0, 0),
