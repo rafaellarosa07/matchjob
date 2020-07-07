@@ -259,7 +259,7 @@ class _VagaVisualizarState extends State<VagaVisualizar> {
   _candidatar() {
     _candidatarRequest("vaga", widget.vaga.id);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => MinhasVagas()),
+        MaterialPageRoute(builder: (BuildContext context) => VagaListagemTodas()),
         (Route<dynamic> route) => false);
   }
 
