@@ -172,7 +172,9 @@ class _CandidaturasState extends State<Candidaturas> {
           listaUsuario = jsonResponse.map((val) => Usuario.fromJson(val)).toList();
         });
       } else{
-        listaUsuario = new List<Usuario>();
+        setState(() {
+          listaUsuario = new List<Usuario>();
+        });
       }
     }
   }

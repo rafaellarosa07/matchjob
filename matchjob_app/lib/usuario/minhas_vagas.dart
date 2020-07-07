@@ -36,12 +36,14 @@ class _MinhasVagasState extends State<MinhasVagas> {
     return Scaffold(
       appBar: AppBar(
           title: new TextField(
-           style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
+              style: TextStyle(
+                  color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
               decoration: InputDecoration(
                 hintText: 'Pesquisar',
                 hintStyle: TextStyle(
-                    fontFamily: "WorkSansSemiBold", fontSize: 17.0, color: Colors.white),
-
+                    fontFamily: "WorkSansSemiBold",
+                    fontSize: 17.0,
+                    color: Colors.white),
               ),
               onChanged: onItemChanged),
           centerTitle: true,
@@ -49,14 +51,12 @@ class _MinhasVagasState extends State<MinhasVagas> {
           leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HomePrestador()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePrestador()));
               })),
       body: _listaDeVagas(),
     );
   }
-
-
 
   Widget _listaDeVagas() {
     return ListView.builder(
@@ -73,86 +73,80 @@ class _MinhasVagasState extends State<MinhasVagas> {
                     elevation: 20,
                     child: new Container(
                         child: new Stack(
-                          children: <Widget>[
-                            Column(children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Row(children: <Widget>[
-                                      Icon(
-                                        Icons.email,
-                                        color: Colors.indigo[400],
-                                        size: 40,
-                                      ),
-                                      Padding(
-                                        padding:
+                      children: <Widget>[
+                        Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Row(children: <Widget>[
+                                  Icon(
+                                    Icons.email,
+                                    color: Colors.indigo[400],
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding:
                                         const EdgeInsets.fromLTRB(90, 0, 0, 0),
-                                        child: Row(children: <Widget>[
-                                          Text(listaVaga[index].nome,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.indigo[600],
-                                                  fontSize: 18))
-                                        ]),
-                                      )
-                                    ])),
-                              ),
-                              Divider(
-                                color: Colors.grey,
-                                height: 5,
-                                thickness: 1,
-                                indent: 20,
-                                endIndent: 0,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
                                     child: Row(children: <Widget>[
-                                      Text(listaVaga[index].nomeEmpresa,
+                                      Text(listaVaga[index].nome,
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text(listaVaga[index].endereco.cidade.nome,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text("R\$ ",
-                                          style: TextStyle(
-                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.indigo[600],
                                               fontSize: 18))
                                     ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text(listaVaga[index].valor,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
                                   )
-
-                                ],
+                                ])),
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            height: 5,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].nomeEmpresa,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
                               ),
-                            ])
-                          ],
-                        )))));
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].endereco.cidade.nome,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text("R\$ ",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18))
+                                ]),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].valor,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
+                              )
+                            ],
+                          ),
+                        ])
+                      ],
+                    )))));
       },
     );
   }
@@ -160,7 +154,8 @@ class _MinhasVagasState extends State<MinhasVagas> {
   onItemChanged(String value) {
     setState(() {
       listaVaga = newDataList
-          .where((string) => string.nome.toLowerCase().contains(value.toLowerCase()))
+          .where((string) =>
+              string.nome.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -168,8 +163,9 @@ class _MinhasVagasState extends State<MinhasVagas> {
   void _visualizarVaga(Vaga vaga) {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-            builder: (BuildContext context) => VagaVisualizarCandidatada(vaga: vaga)),
-            (Route<dynamic> route) => false);
+            builder: (BuildContext context) =>
+                VagaVisualizarCandidatada(vaga: vaga)),
+        (Route<dynamic> route) => false);
   }
 
   _consultarVagas() async {
@@ -179,7 +175,7 @@ class _MinhasVagasState extends State<MinhasVagas> {
     List jsonResponse;
 
     var response = await http.get(
-        Variavel.urlBase+"vaga/minhas-vagas/" + usuario.toString(),
+        Variavel.urlBase + "vaga/minhas-vagas/" + usuario.toString(),
         headers: {"Content-type": "application/json"});
     if (response.statusCode == 200 || response.statusCode == 204) {
       jsonResponse = response.body.isEmpty ? null : jsonDecode(response.body);
@@ -189,11 +185,12 @@ class _MinhasVagasState extends State<MinhasVagas> {
           newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
           listaVaga = List.from(newDataList);
         });
-      }else{
-        newDataList = new List<Vaga>();
-        listaVaga = List.from(newDataList);
+      } else {
+        setState(() {
+          newDataList = new List<Vaga>();
+          listaVaga = List.from(newDataList);
+        });
       }
-
     }
   }
 }

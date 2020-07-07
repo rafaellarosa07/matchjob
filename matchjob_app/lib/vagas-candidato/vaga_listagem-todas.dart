@@ -194,8 +194,10 @@ class _VagaListagemTodasState extends State<VagaListagemTodas> {
           listaVaga = List.from(newDataList);
         });
       }else{
-        newDataList = new List<Vaga>();
-        listaVaga = List.from(newDataList);
+        setState(() {
+          newDataList = new List<Vaga>();
+          listaVaga = List.from(newDataList);
+        });
       }
     }
   }

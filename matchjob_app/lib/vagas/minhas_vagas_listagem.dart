@@ -26,15 +26,28 @@ class _VagaListagemState extends State<VagaListagem> {
   final _valor = TextEditingController();
   final _descricao = TextEditingController();
   final _formKey = new GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    _consultarVagas();
+    _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(duration: new Duration(seconds: 4), content:
+        new Row(
+          children: <Widget>[
+            new CircularProgressIndicator(),
+            new Text("  carregando...")
+          ],
+        ),
+        ));
+    _consultarVagas().whenComplete(()=>
+      _closeLoading()
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key:_scaffoldKey,
       appBar: AppBar(
           title: new TextField(
               style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
@@ -208,13 +221,22 @@ class _VagaListagemState extends State<VagaListagem> {
     int usuario;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     usuario = sharedPreferences.get("pessoaLogada");
-    List jsonResponse;
 
-    var response = await http.get(
+    var response ;
+    response = await http.get(
         Variavel.urlBase +
             "vaga/minhas-vagas-cadastradas/" +
             usuario.toString(),
-        headers: {"Content-type": "application/json"});
+        headers: {"Content-type": "application/json"}).whenComplete(() =>
+    _verificarResponse(response));
+  }
+  _closeLoading() {
+    Navigator.of(context).pop();
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+
+  }
+  _verificarResponse(var response){
+    List jsonResponse;
     if (response.statusCode == 200 || response.statusCode == 204) {
       jsonResponse = response.body.isEmpty ? null : jsonDecode(response.body);
       if (jsonResponse != null) {
@@ -224,9 +246,12 @@ class _VagaListagemState extends State<VagaListagem> {
           listaVaga = List.from(newDataList);
         });
       }else{
-        newDataList = new List<Vaga>();
-        listaVaga = List.from(newDataList);
+        setState(() {
+          newDataList = new List<Vaga>();
+          listaVaga = List.from(newDataList);
+        });
       }
     }
   }
+
 }
