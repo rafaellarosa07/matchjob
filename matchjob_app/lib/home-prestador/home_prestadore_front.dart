@@ -337,6 +337,9 @@ class _HomePrestadorFrontState extends State<HomePrestadorFront> {
         if (value.isEmpty) {
           return 'Por Favor digite um valor valido';
         }
+        else if(value.length < 8){
+          return 'Por Favor digite uma senha com no minimo 8 digitos';
+        }
         return null;
       },
       keyboardType: textInputType,
