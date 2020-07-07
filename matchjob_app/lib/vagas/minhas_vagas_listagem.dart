@@ -26,36 +26,25 @@ class _VagaListagemState extends State<VagaListagem> {
   final _valor = TextEditingController();
   final _descricao = TextEditingController();
   final _formKey = new GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    _scaffoldKey.currentState.showSnackBar(
-        new SnackBar(duration: new Duration(seconds: 4), content:
-        new Row(
-          children: <Widget>[
-            new CircularProgressIndicator(),
-            new Text("  carregando...")
-          ],
-        ),
-        ));
-    _consultarVagas().whenComplete(()=>
-      _closeLoading()
-    );
+    _consultarVagas();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key:_scaffoldKey,
       appBar: AppBar(
           title: new TextField(
-              style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
+              style: TextStyle(
+                  color: Colors.white, fontSize: 24, fontFamily: 'MyFont'),
               decoration: InputDecoration(
                 hintText: 'Pesquisar',
-                  hintStyle: TextStyle(
-                      fontFamily: "WorkSansSemiBold", fontSize: 17.0, color: Colors.white),
-
+                hintStyle: TextStyle(
+                    fontFamily: "WorkSansSemiBold",
+                    fontSize: 17.0,
+                    color: Colors.white),
               ),
               onChanged: onItemChanged),
           centerTitle: true,
@@ -116,86 +105,80 @@ class _VagaListagemState extends State<VagaListagem> {
                     elevation: 20,
                     child: new Container(
                         child: new Stack(
-                          children: <Widget>[
-                            Column(children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Row(children: <Widget>[
-                                      Icon(
-                                        Icons.email,
-                                        color: Colors.indigo[400],
-                                        size: 40,
-                                      ),
-                                      Padding(
-                                        padding:
+                      children: <Widget>[
+                        Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Row(children: <Widget>[
+                                  Icon(
+                                    Icons.email,
+                                    color: Colors.indigo[400],
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding:
                                         const EdgeInsets.fromLTRB(90, 0, 0, 0),
-                                        child: Row(children: <Widget>[
-                                          Text(listaVaga[index].nome,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.indigo[600],
-                                                  fontSize: 18))
-                                        ]),
-                                      )
-                                    ])),
-                              ),
-                              Divider(
-                                color: Colors.grey,
-                                height: 5,
-                                thickness: 1,
-                                indent: 20,
-                                endIndent: 0,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
                                     child: Row(children: <Widget>[
-                                      Text(listaVaga[index].nomeEmpresa,
+                                      Text(listaVaga[index].nome,
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text(listaVaga[index].endereco.cidade.nome,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text("R\$ ",
-                                          style: TextStyle(
-                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.indigo[600],
                                               fontSize: 18))
                                     ]),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Row(children: <Widget>[
-                                      Text(listaVaga[index].valor,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16))
-                                    ]),
                                   )
-
-                                ],
+                                ])),
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            height: 5,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].nomeEmpresa,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
                               ),
-                            ])
-                          ],
-                        )))));
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].endereco.cidade.nome,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text("R\$ ",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18))
+                                ]),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Row(children: <Widget>[
+                                  Text(listaVaga[index].valor,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16))
+                                ]),
+                              )
+                            ],
+                          ),
+                        ])
+                      ],
+                    )))));
       },
     );
   }
@@ -207,12 +190,11 @@ class _VagaListagemState extends State<VagaListagem> {
         (Route<dynamic> route) => false);
   }
 
-
-
   onItemChanged(String value) {
     setState(() {
       listaVaga = newDataList
-          .where((string) => string.nome.toLowerCase().contains(value.toLowerCase()))
+          .where((string) =>
+              string.nome.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -221,22 +203,13 @@ class _VagaListagemState extends State<VagaListagem> {
     int usuario;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     usuario = sharedPreferences.get("pessoaLogada");
+    List jsonResponse;
 
-    var response ;
-    response = await http.get(
+    var response = await http.get(
         Variavel.urlBase +
             "vaga/minhas-vagas-cadastradas/" +
             usuario.toString(),
-        headers: {"Content-type": "application/json"}).whenComplete(() =>
-    _verificarResponse(response));
-  }
-  _closeLoading() {
-    Navigator.of(context).pop();
-    _scaffoldKey.currentState.hideCurrentSnackBar();
-
-  }
-  _verificarResponse(var response){
-    List jsonResponse;
+        headers: {"Content-type": "application/json"});
     if (response.statusCode == 200 || response.statusCode == 204) {
       jsonResponse = response.body.isEmpty ? null : jsonDecode(response.body);
       if (jsonResponse != null) {
@@ -245,7 +218,7 @@ class _VagaListagemState extends State<VagaListagem> {
           newDataList = jsonResponse.map((val) => Vaga.fromJson(val)).toList();
           listaVaga = List.from(newDataList);
         });
-      }else{
+      } else {
         setState(() {
           newDataList = new List<Vaga>();
           listaVaga = List.from(newDataList);
@@ -253,5 +226,4 @@ class _VagaListagemState extends State<VagaListagem> {
       }
     }
   }
-
 }
